@@ -22,6 +22,9 @@ TestDoubleServer.mappings = {}
 
 def stub(hostname, text_to_return):
     TestDoubleServer.mappings[hostname] = text_to_return
+    # save current /etc/hosts
+    # append to /etc/hosts: "127.0.0.1\t" + hostname
+    # set /etc/hosts to be reset on termination of the executing process
 
 
 def activate_double():
