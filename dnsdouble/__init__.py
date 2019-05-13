@@ -2,6 +2,7 @@ import os
 import getpass
 import atexit
 import shutil
+import json
 from http.server import *
 
 if getpass.getuser() != "root":
@@ -35,20 +36,41 @@ def append_localhost_redirect_to_etc_hosts_file(hostname):
         hosts_file.write(line_to_add)
 
 
+dns_mocks_host = "dnsmocks.local"
+append_localhost_redirect_to_etc_hosts_file(dns_mocks_host)
+
+
 class TestDoubleServer(BaseHTTPRequestHandler):
+    request_paths = {}
+
+    def request_host(self):
+        return self.headers.get('Host')
+
     def do_GET(self):
-        print(self.headers.get('Host'))
-
-        text_content = ""
-        for k in TestDoubleServer.mappings:
-            if self.headers.get('Host') == k:
-                text_content = TestDoubleServer.mappings[k]
-                break
-
         self.send_response(200)
+        if self.request_host() == dns_mocks_host:
+            self.send_mocks_information()
+        else:
+            self.send_stubbed_response()
+
+    def send_mocks_information(self):
+        self.send_header('Content-Type', 'application/json; charset=utf-8')
+        self.end_headers()
+        self.wfile.write(json.dumps(self.request_paths).encode('utf-8'))
+
+    def send_stubbed_response(self):
         self.send_header('Content-Type', 'text/plain; charset=utf-8')
         self.end_headers()
-        self.wfile.write(text_content.encode('utf-8'))
+        self.wfile.write(self.get_text_content().encode('utf-8'))
+
+    def get_text_content(self):
+        text_content = ""
+        for k in TestDoubleServer.mappings:
+            if self.request_host() == k:
+                text_content = TestDoubleServer.mappings[k]
+                self.request_paths[k] = self.path
+                break
+        return text_content
 
 
 TestDoubleServer.mappings = {}
