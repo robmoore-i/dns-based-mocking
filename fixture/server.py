@@ -10,7 +10,7 @@ if len(sys.argv) != 2:
 
 class RequestHandler(BaseHTTPRequestHandler):
     def search_github(self, query):
-        url = "https://github.com/search?q=" + query
+        url = "http://github.com/search?q=" + query
         response = requests.get(url)
         css_classes = list(
             map(lambda s: s[7:], list(filter(lambda s: s.startswith("class="), response.text.split(" ")))))
@@ -20,7 +20,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         return "".join(list(map(lambda i: "abcdefghij"[int(i)], str(random.randint(100000, 1000000)))))
 
     def search_google(self, query):
-        url = "https://www.google.com/search?client=safari&rls=en&q=" + query + "&ie=UTF-8&oe=UTF-8"
+        url = "http://www.google.com/search?client=safari&rls=en&q=" + query + "&ie=UTF-8&oe=UTF-8"
         response = requests.get(url)
         random_position = random.randint(0, len(response.text) - 20)
         return "".join(list(reversed(query))) + " " + response.text[random_position:random_position + 10]

@@ -4,6 +4,7 @@ from assertpy import *
 
 dnsdouble.stub("github.com", "abc class=hello def")
 dnsdouble.stub("www.google.com", "tttttttttttttttttttttttttttttt")
+dnsdouble.activate_double()
 
 response = requests.get("http://localhost:8080")
 expected_oracle_prediction = "olleh tttttttttt"
