@@ -1,0 +1,1 @@
+sudo PYTHONPATH=:. python3 tests/external_services_test_doubles.py
