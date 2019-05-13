@@ -15,7 +15,7 @@ def reset_etc_hosts_file():
     shutil.copy2("hosts", "/etc/hosts")
     print("Reset /etc/hosts to original")
     os.remove("hosts")
-    print("Deleted copy of /etc/hosts")
+    print("Deleted the backup copy of /etc/hosts, which has now been reset to its previous behaviour")
 
 
 atexit.register(reset_etc_hosts_file)

@@ -13,7 +13,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         url = "http://github.com/search?q=" + query
         response = requests.get(url)
         css_classes = list(
-            map(lambda s: s[6:], list(filter(lambda s: s.startswith("class="), response.text.split(" ")))))
+            map(lambda s: s[7:-1], list(filter(lambda s: s.startswith("class="), response.text.split(" ")))))
         return_value = str(css_classes[random.randint(0, len(css_classes) - 1)])
         print("github: " + return_value)
         return return_value
