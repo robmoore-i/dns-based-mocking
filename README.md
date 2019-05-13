@@ -21,3 +21,12 @@ in an end-to-end test.
 - I need root permissions to mess with /etc/hosts
 + Enables more automated tests to run locally on developer machines
 - Tests require complicated set up
+
+## Usage of this example
+
+- Open 3 terminal tabs
+- In the first, run `./run-dns-mocks`
+- In the second, run `./run-fixture`
+- In the last, run `./run-tests`
+
+The tests should pass and you should see some logging from the two other tabs.
