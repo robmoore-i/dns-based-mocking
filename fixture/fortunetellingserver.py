@@ -38,7 +38,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         self.wfile.write(text_content.encode('utf-8'))
 
 
-class Server:
+class FortuneTellingServer:
     def __init__(self, port):
         self.port = port
 
@@ -48,5 +48,5 @@ class Server:
         httpd.serve_forever()
 
 
-server = Server(int(sys.argv[1]))
+server = FortuneTellingServer(int(sys.argv[1]))
 server.run()
