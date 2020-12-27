@@ -1,5 +1,7 @@
 # Proof of concept for external server mocking
 
+(Note from the future: I think this may have been misguided. I recommend making the hostnames of your external dependencies configurable so that you don't have to do daft things like this. But it was fun to make and I learnt from making it, so #noregrets.)
+
 ## Problem
 
 I want to test a RESTful API, but...
